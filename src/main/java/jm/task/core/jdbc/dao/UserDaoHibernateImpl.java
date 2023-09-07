@@ -17,6 +17,7 @@ public class UserDaoHibernateImpl implements UserDao {
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS mydbtest.users (id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT, name VARCHAR(45) NOT NULL, lastName VARCHAR(45) NOT NULL, age TINYINT)";
     private static final String DROP_TABLE = "DROP TABLE mydbtest.users";
     private static final String CLEAN_TABLE = "DELETE FROM mydbtest.users";
+    private static Session session = null;
     public UserDaoHibernateImpl() {
 
     }
@@ -30,6 +31,9 @@ public class UserDaoHibernateImpl implements UserDao {
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
         }
     }
 
@@ -41,6 +45,9 @@ public class UserDaoHibernateImpl implements UserDao {
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
         }
     }
 
@@ -54,6 +61,9 @@ public class UserDaoHibernateImpl implements UserDao {
             session.close();
         } catch (Exception e) {
             e.printStackTrace();
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
         }
     }
 
@@ -70,6 +80,9 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
         }
     }
 //    @SuppressWarnings("unchecked")
@@ -85,6 +98,9 @@ public class UserDaoHibernateImpl implements UserDao {
         transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
         }
         return list;
     }
@@ -97,6 +113,9 @@ public class UserDaoHibernateImpl implements UserDao {
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
         }
     }
 }
